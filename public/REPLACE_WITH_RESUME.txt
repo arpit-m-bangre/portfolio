@@ -1,0 +1,11 @@
+RESUME PLACEHOLDER
+==================
+Replace this file with your actual resume PDF.
+
+Steps:
+1. Export your resume as a PDF
+2. Name it exactly: resume.pdf
+3. Drop it in the /public/ folder (replace this file)
+4. The navbar "Resume" button and hero CTA will automatically download it
+
+The download link is already wired in the navbar and hero buttons.

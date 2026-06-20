@@ -1,0 +1,479 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Accessibility: Screen-reader only ─────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.focus\:not-sr-only:focus {
+  position: fixed;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ─── Minimum tap target size (WCAG 2.5.5) ─────────────────────────────────── */
+.btn-primary,
+.btn-outline,
+nav a,
+footer a {
+  min-height: 44px;
+}
+
+/* ─── Print styles ──────────────────────────────────────────────────────────── */
+@media print {
+  .navbar-blur, nav, footer { display: none !important; }
+  body { background: white; color: black; }
+}
+
+/* ─── Custom CSS Variables ─────────────────────────────────────────────────── */
+:root {
+  --color-bg-base:    #0A0E14;
+  --color-bg-surface: #0D1117;
+  --color-bg-card:    #161B22;
+  --color-bg-border:  #21262D;
+  --color-accent:     #22D3EE;
+  --color-accent-dim: #0E7490;
+  --color-text-primary:   #E6EDF3;
+  --color-text-secondary: #8B949E;
+  --color-text-muted:     #484F58;
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ─── Base Resets ───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar Styling ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-dim);
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(34, 211, 238, 0.2);
+  color: var(--color-accent);
+}
+
+/* ─── Typography Helpers ────────────────────────────────────────────────────── */
+.font-mono {
+  font-family: var(--font-mono) !important;
+}
+
+/* ─── Gradient Text ─────────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #22D3EE 0%, #2DD4BF 50%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero Grid Background ──────────────────────────────────────────────────── */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridDrift 25s linear infinite;
+}
+
+@keyframes gridDrift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+/* ─── Dot Grid Variant ──────────────────────────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(rgba(34, 211, 238, 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Accent Glow Effects ───────────────────────────────────────────────────── */
+.accent-glow {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+}
+
+.accent-glow-border {
+  border-color: rgba(34, 211, 238, 0.5);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.1), inset 0 0 20px rgba(34, 211, 238, 0.02);
+}
+
+/* ─── Card Base Styles ──────────────────────────────────────────────────────── */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: 0.75rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(34, 211, 238, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ─── Mono Tag / Badge ──────────────────────────────────────────────────────── */
+.mono-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  color: var(--color-accent);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  display: inline-block;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.mono-tag:hover {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.4);
+}
+
+/* ─── Section Divider Sparkline ─────────────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-bg-border) 20%, var(--color-accent-dim) 50%, var(--color-bg-border) 80%, transparent);
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* ─── Timeline Left Border ──────────────────────────────────────────────────── */
+.timeline-card {
+  border-left: 2px solid var(--color-accent);
+  position: relative;
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 1.5rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+
+/* ─── Pulsing Status Dot ────────────────────────────────────────────────────── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: statusPulse 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes statusPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70%  { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ─── Number Highlight (metrics in bold) ────────────────────────────────────── */
+.metric {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* ─── Typewriter Cursor ─────────────────────────────────────────────────────── */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-accent);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── Navbar Blur (applied via JS scroll) ───────────────────────────────────── */
+.navbar-blur {
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  background: rgba(10, 14, 20, 0.85);
+  border-bottom: 1px solid rgba(33, 38, 45, 0.8);
+}
+
+/* ─── Button Base ───────────────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--color-accent);
+  color: #0A0E14;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-accent);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+  background: #38BDF8;
+  border-color: #38BDF8;
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  padding: 0.625rem 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(34, 211, 238, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-outline:hover {
+  background: rgba(34, 211, 238, 0.08);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.15);
+  transform: translateY(-1px);
+}
+
+/* ─── Section Heading Underline ──────────────────────────────────────────────── */
+.section-heading-line {
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+  margin-top: 0.5rem;
+  border-radius: 1px;
+}
+
+/* ─── Skill Bar ─────────────────────────────────────────────────────────────── */
+.skill-bar-track {
+  background: var(--color-bg-border);
+  border-radius: 999px;
+  height: 4px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-dim), var(--color-accent));
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Focus Ring for Accessibility ─────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced Motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Phase 3 Enhancements ───────────────────────────────────────────────────── */
+
+/* Glass card variant */
+.card-glass {
+  background: rgba(22, 27, 34, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(33, 38, 45, 0.8);
+  border-radius: 0.75rem;
+}
+
+/* Accent border glow — applied on hover via JS or group-hover */
+.border-accent-glow {
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.15),
+              0 8px 32px rgba(0, 0, 0, 0.5),
+              0 0 20px rgba(34, 211, 238, 0.08) !important;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, #22D3EE 0%, #2DD4BF 40%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section number counter (decorative large bg digit) */
+.section-bg-number {
+  font-family: var(--font-mono);
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 900;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(34, 211, 238, 0.06);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Input base styles (dark theme) */
+input, textarea {
+  color-scheme: dark;
+}
+
+/* Form focus ring override */
+input:focus, textarea:focus {
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08) !important;
+  outline: none !important;
+}
+
+/* Scrolling shimmer for loading skeleton states */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-card) 0%,
+    rgba(34, 211, 238, 0.04) 50%,
+    var(--color-bg-card) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Floating sparkline animation */
+@keyframes sparkFloat {
+  0%, 100% { transform: translateY(0);   opacity: 0.07; }
+  50%       { transform: translateY(-8px); opacity: 0.1; }
+}
+.sparkline-float {
+  animation: sparkFloat 8s ease-in-out infinite;
+}
+
+/* Subtle scan-line overlay (very low opacity — pure aesthetics) */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Data-line horizontal decoration */
+.data-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.data-line::before,
+.data-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-bg-border), transparent);
+}
+
+/* Tag hover brighten already covered by mono-tag — adding active state */
+.mono-tag:active {
+  transform: scale(0.97);
+}
+
+/* Button active press effect */
+.btn-primary:active,
+.btn-outline:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Glow text for accent numbers */
+.glow-text {
+  color: var(--color-accent);
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+}
+
+/* Timeline dot glow */
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.7), 0 0 16px rgba(34, 211, 238, 0.3);
+  position: absolute;
+  left: -5px;
+  top: 1.75rem;
+}
